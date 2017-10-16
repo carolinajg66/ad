@@ -5,19 +5,23 @@ namespace CCategoria
     public partial class CategoriaWindow : Gtk.Window
     {
         public CategoriaWindow() :
-                base(Gtk.WindowType.Toplevel)
-        {
+                base(Gtk.WindowType.Toplevel){
+            
             this.Build();
 
             saveAction.Activated += delegate{
                 string nombre = entryNombre.Text;
                 IDbCommand dbCommand = App.Instance.Connection.CreateCommand();
                 dbCommand.CommandText="insert into categoria (nombre) values (@nombre)";
-                IDbDataParameter dbDataParemeter = dbCommand.CreateParameter();
+                DbCommandHelper.AddParemeter(dbCommand, "nombre", nombre);
+
+                /*IDbDataParameter dbDataParemeter = dbCommand.CreateParameter();
                 dbDataParemeter.ParameterName = "nombre";
                 dbDataParemeter.Value = nombre;
-                dbCommand.Parameters.Add(dbDataParemeter);
+                dbCommand.Parameters.Add(dbDataParemeter);*/
+
                 dbCommand.ExecuteNonQuery();
+
                 Destroy();
             };
         }
