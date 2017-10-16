@@ -4,11 +4,10 @@ namespace CCategoria
 {
     public class DbCommandHelper
     {
-        public static void AddParemeter(IDbCommand dbCommand, string nombre, object value){
-			//TODO implementar 
-
+        public static void AddParemeter(IDbCommand dbCommand, string name, object value){
+			 
 			IDbDataParameter dbDataParemeter = dbCommand.CreateParameter();
-			dbDataParemeter.ParameterName = nombre;
+            dbDataParemeter.ParameterName = name;
             dbDataParemeter.Value = value;
 			dbCommand.Parameters.Add(dbDataParemeter);
         }

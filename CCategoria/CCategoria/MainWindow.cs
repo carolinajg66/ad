@@ -13,6 +13,8 @@ public partial class MainWindow : Gtk.Window
     {
         Build();
 
+        deleteAction.Sensitive = false;
+
         string connectionString = "server=localhost;database=dbprueba;user=root;password=sistemas";
         App.Instance.Connection = new MySqlConnection(connectionString);
         App.Instance.Connection.Open();
@@ -33,9 +35,11 @@ public partial class MainWindow : Gtk.Window
 
         fillListStore(listStore);
 
-        newAction.Activated += delegate
-        {
+        treeView.Selection.Changed += delegate {
+            deleteAction.Sensitive = treeView.Selection.CountSelectedRows() > 0;
+        };
 
+        newAction.Activated += delegate{
             new CategoriaWindow();
         };
 
@@ -53,6 +57,34 @@ public partial class MainWindow : Gtk.Window
 
 		};
 
+        deleteAction.Activated += delegate {
+            MessageDialog messageDialog = new MessageDialog(
+                this,
+                DialogFlags.Modal,
+                MessageType.Question,
+                ButtonsType.YesNo,
+                "¿Quieres aliminar el registro?"
+
+            );
+            treeView.Selection.CountSelectedRows();
+
+            ResponseType response = (ResponseType)messageDialog.Run();
+            messageDialog.Destroy();
+            if (response == ResponseType.Yes){
+                TreeIter treeIter;
+                treeView.Selection.GetSelected(out treeIter);
+                if(treeIter.Equals(TreeIter.Zero))
+                    Console.WriteLine("Ninguno seleccionado" );
+                else
+                Console.WriteLine("id =" +listStore.GetValue(treeIter, 0));
+                //TODO eliminar 
+
+
+
+            }
+
+        };
+
     }
 
     private void fillListStore(ListStore listStore){
@@ -66,6 +98,10 @@ public partial class MainWindow : Gtk.Window
 
 
 	}
+
+
+
+   
 
     protected void OnDeleteEvent(object sender, DeleteEventArgs a)
     {

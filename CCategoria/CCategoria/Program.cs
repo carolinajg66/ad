@@ -5,8 +5,7 @@ namespace CCategoria
     class MainClass
     {
 
-        public static void Main(string[] args)
-        {
+        public static void Main(string[] args){
             
             Application.Init();
             MainWindow win = new MainWindow();
