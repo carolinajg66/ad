@@ -14,13 +14,13 @@ namespace CCategoria
                 IDbCommand dbCommand = App.Instance.Connection.CreateCommand();
                 dbCommand.CommandText="insert into categoria (nombre) values (@nombre)";
                 DbCommandHelper.AddParemeter(dbCommand, "nombre", nombre);
-
+                dbCommand.ExecuteNonQuery();
                 /*IDbDataParameter dbDataParemeter = dbCommand.CreateParameter();
                 dbDataParemeter.ParameterName = "nombre";
                 dbDataParemeter.Value = nombre;
                 dbCommand.Parameters.Add(dbDataParemeter);*/
 
-                dbCommand.ExecuteNonQuery();
+
 
                 Destroy();
             };
