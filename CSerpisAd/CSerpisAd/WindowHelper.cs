@@ -1,7 +1,7 @@
 ﻿using System;
 using Gtk;
 
-namespace CCategoria {
+namespace Serpis.Ad {
     
     public class WindowHelper {
         

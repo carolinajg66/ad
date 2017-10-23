@@ -1,5 +1,6 @@
 ﻿using System;
 using Gtk;
+using Serpis.Ad;
 using MySql.Data.MySqlClient;
 using System.Data;
 
@@ -86,13 +87,13 @@ public partial class MainWindow : Gtk.Window {
     }
 
     protected void update(ListStore listStore){
-		   
+
 		/*string nombre = entryNombre.Text;
 		IDbCommand dbCommand = App.Instance.Connection.CreateCommand();
-		dbCommand.CommandText = "update into categoria (nombre) values (@nombre)";
+		dbCommand.CommandText = "update from categoria set nombre=@nombre where id=@id";
 		DbCommandHelper.AddParemeter(dbCommand, "nombre", nombre);
 		dbCommand.ExecuteNonQuery();*/
-    }
+	}
 
 
 
