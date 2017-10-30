@@ -28,6 +28,11 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
       </action>
+      <action id="editAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-edit</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -44,10 +49,11 @@
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="newAction" />
               <node type="Separator" />
+              <node type="Toolitem" action="editAction" />
+              <node type="Separator" />
               <node type="Toolitem" action="refreshAction" />
               <node type="Separator" />
               <node type="Toolitem" action="deleteAction" />
-              <node type="Toolitem" action="Action" />
             </node>
           </widget>
           <packing>
