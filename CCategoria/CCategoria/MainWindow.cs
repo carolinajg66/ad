@@ -42,7 +42,8 @@ public partial class MainWindow : Gtk.Window {
         };
 
         newAction.Activated += delegate {
-            new CategoriaWindow();
+            Categoria categoria = new Categoria();
+            new CategoriaWindow(categoria);
 
         };
 
@@ -62,7 +63,8 @@ public partial class MainWindow : Gtk.Window {
         editAction.Activated += delegate {
 
 			object id = getId();
-            new CategoriaWindow(id);
+            Categoria categoria = CategoriaDao.Load (id);
+            new CategoriaWindow(categoria);
         };
 
 
