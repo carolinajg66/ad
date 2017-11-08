@@ -4,6 +4,7 @@ using Serpis.Ad;
 using MySql.Data.MySqlClient;
 using System.Data;
 
+
 using CCategoria;
 
 
@@ -17,52 +18,43 @@ public partial class MainWindow : Gtk.Window {
         deleteAction.Sensitive = false;
         editAction.Sensitive = false;
 
-        string connectionString = "server=localhost;database=dbprueba;user=root;password=sistemas";
-        App.Instance.Connection = new MySqlConnection(connectionString);
+        App.Instance.Connection = new MySqlConnection("server = localhost; database = dbprueba; user = root; password = sistemas");
         App.Instance.Connection.Open();
 
 
-        treeView.AppendColumn("id", new CellRendererText(), "text", 0);
-        treeView.AppendColumn("nombre", new CellRendererText(), "text", 1);
-        ListStore listStore = new ListStore(typeof(string), typeof(string));
-        treeView.Model = listStore;
+        TreeViewHelper.Fill(treeView, CategoriaDao.SelectAll);
 
-        fillListStore(listStore);
 
         treeView.Selection.Changed += delegate {
             bool hasSelected = treeView.Selection.CountSelectedRows() > 0;
             deleteAction.Sensitive = hasSelected;
             editAction.Sensitive = hasSelected;
 
-           /* if (treeView.Selection.CountSelectedRows() > 0)
-                deleteAction.Sensitive = true;
-            else
-                deleteAction.Sensitive = false;*/
+          
 
         };
 
         newAction.Activated += delegate {
             Categoria categoria = new Categoria();
-            new CategoriaWindow(categoria);
+			new CategoriaWindow(categoria);
 
         };
 
         refreshAction.Activated += delegate {
-            listStore.Clear();
-            fillListStore(listStore);
+			TreeViewHelper.Fill(treeView, "select * from categoria order by id");
         };
 
         deleteAction.Activated += delegate {
-           
-            if (WindowHelper.Confirm(this, "¿Quieres eliminar el registro?")) {
-				object id = getId();
-                CategoriaDao.Delete(id);
-            }
+
+			if (WindowHelper.Confirm(this, "¿Quieres eliminar el registro?")) {
+				object id = TreeViewHelper.getId(treeView);
+				CategoriaDao.Delete(id);
+			}
         };
 
         editAction.Activated += delegate {
 
-			object id = getId();
+			object id = TreeViewHelper.getId(treeView);
             Categoria categoria = CategoriaDao.Load (id);
             new CategoriaWindow(categoria);
         };
@@ -72,6 +64,7 @@ public partial class MainWindow : Gtk.Window {
 
     private void fillListStore(ListStore listStore) {
 
+        listStore.Clear();
         IDbCommand dbCommand = App.Instance.Connection.CreateCommand();
         dbCommand.CommandText = "select * from categoria order by id";
         IDataReader dataReader = dbCommand.ExecuteReader();
@@ -81,14 +74,7 @@ public partial class MainWindow : Gtk.Window {
 
 
     }
-    private object getId(){
-		TreeIter treeIter;
-		treeView.Selection.GetSelected(out treeIter);
-        return treeView.Model.GetValue(treeIter, 0);
 
-	}
-
-   
     protected void OnDeleteEvent(object sender, DeleteEventArgs a) {
         App.Instance.Connection.Close();
 
