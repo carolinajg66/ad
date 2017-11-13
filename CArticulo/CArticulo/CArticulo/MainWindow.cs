@@ -20,6 +20,9 @@ using CArticulo;
 
 
 			TreeViewHelper.Fill(treeView, ArticuloDao.SelectAll);
+        //(Select id, nombre, precio,c.nombre as categoria from articulo a left 
+        //join categoria c o n a.categoria=c.id order by a.id);
+
 
 
 			treeView.Selection.Changed += delegate {

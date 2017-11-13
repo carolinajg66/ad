@@ -15,11 +15,16 @@ namespace CArticulo {
 				IDataReader dataReader = dbCommand.ExecuteReader();
 				dataReader.Read(); //TODO tratamiento de excepciones 
 				string nombre = dataReader["nombre"].ToString();
+                string precio = dataReader["precio"].ToString();
+                string categoria = dataReader["categoria"].ToString();
 				dataReader.Close();
 
 				Articulo a = new Articulo();
 				a.Id = Convert.ToInt64(id);
 				a.Nombre = nombre;
+                a.Precio = Decimal.Parse(precio);
+                a.Categoria =long.Parse(categoria) ;
+          
 				return a;
 			}
 
