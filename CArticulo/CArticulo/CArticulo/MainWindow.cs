@@ -40,7 +40,7 @@ using CArticulo;
 			};
 
 			refreshAction.Activated += delegate {
-				TreeViewHelper.Fill(treeView, "select * from articulo order by id");
+            TreeViewHelper.Fill(treeView, ArticuloDao.SelectAll);
 			};
 
 			deleteAction.Activated += delegate {

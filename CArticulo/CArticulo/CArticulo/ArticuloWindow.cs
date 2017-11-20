@@ -7,7 +7,6 @@ namespace CArticulo {
             spinbutton1.Text = articulo.Precio.ToString();
 
 
-
             saveAction.Activated += delegate {
                 articulo.Nombre = entryNombre.Text;
                 articulo.Precio = Decimal.Parse(spinbutton1.Text);

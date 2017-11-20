@@ -14,16 +14,17 @@ namespace CArticulo {
 				DbCommandHelper.AddParemeter(dbCommand, "id", id);
 				IDataReader dataReader = dbCommand.ExecuteReader();
 				dataReader.Read(); //TODO tratamiento de excepciones 
-				string nombre = dataReader["nombre"].ToString();
-                string precio = dataReader["precio"].ToString();
-                string categoria = dataReader["categoria"].ToString();
+                string nombre = (string)dataReader["nombre"];
+                decimal  precio =(decimal) dataReader["precio"];
+                long categoria = dataReader["categoria"] is DBNull ?
+                0 : (long)dataReader["categoria"];
 				dataReader.Close();
 
 				Articulo a = new Articulo();
 				a.Id = Convert.ToInt64(id);
 				a.Nombre = nombre;
-                a.Precio = Decimal.Parse(precio);
-                a.Categoria =long.Parse(categoria) ;
+                a.Precio = precio;
+                a.Categoria =categoria ;
           
 				return a;
 			}
@@ -45,10 +46,16 @@ namespace CArticulo {
 
 				IDbCommand dbCommand = App.Instance.Connection.CreateCommand();
 				dbCommand.CommandText = "insert into articulo (nombre,precio,categoria) " +
-                "values (@nombre, @precio,@categoria)";
+                "values (@nombre, @precio, @categoria)";
                 DbCommandHelper.AddParemeter(dbCommand, "nombre", articulo.Nombre);
                 DbCommandHelper.AddParemeter(dbCommand, "precio", articulo.Precio);
-                DbCommandHelper.AddParemeter(dbCommand, "categoria", articulo.Categoria);
+			    DbCommandHelper.AddParemeter(dbCommand, "categoria",
+                articulo.Categoria == 0 ? (object)null : articulo.Categoria);
+
+    			//object categoria = articulo.Categoria;
+    			//if (articulo.Categoria == 0)
+    				//categoria = null;
+
 				dbCommand.ExecuteNonQuery();
 			}
 
