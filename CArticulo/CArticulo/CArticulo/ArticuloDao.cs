@@ -67,7 +67,8 @@ namespace CArticulo {
                 DbCommandHelper.AddParemeter(dbCommand, "id", articulo.Id);
                 DbCommandHelper.AddParemeter(dbCommand, "nombre", articulo.Nombre);
                 DbCommandHelper.AddParemeter(dbCommand, "precio", articulo.Precio);
-                DbCommandHelper.AddParemeter(dbCommand, "categoria", articulo.Categoria);
+                DbCommandHelper.AddParemeter(dbCommand, "categoria", articulo.Categoria
+                                            == 0 ? (object)null : articulo.Categoria);
 				dbCommand.ExecuteNonQuery();
 			}
 

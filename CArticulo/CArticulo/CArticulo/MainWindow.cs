@@ -15,7 +15,8 @@ using CArticulo;
 			deleteAction.Sensitive = false;
 			editAction.Sensitive = false;
 
-			App.Instance.Connection = new MySqlConnection("server = localhost; database = dbprueba; user = root; password = sistemas");
+			App.Instance.Connection = new MySqlConnection
+            ("server = localhost; database = dbprueba; user = root; password = sistemas");
 			App.Instance.Connection.Open();
 
 
@@ -61,18 +62,18 @@ using CArticulo;
 
 		}
 
-		private void fillListStore(ListStore listStore) {
+		//private void fillListStore(ListStore listStore) {
 
-			listStore.Clear();
-			IDbCommand dbCommand = App.Instance.Connection.CreateCommand();
-			dbCommand.CommandText = "select * from articulo order by id";
-			IDataReader dataReader = dbCommand.ExecuteReader();
-			while (dataReader.Read())
-				listStore.AppendValues(dataReader["id"].ToString(), dataReader["nombre"]);
-			dataReader.Close();
+		//	listStore.Clear();
+		//	IDbCommand dbCommand = App.Instance.Connection.CreateCommand();
+		//	dbCommand.CommandText = "select * from articulo order by id";
+		//	IDataReader dataReader = dbCommand.ExecuteReader();
+		//	while (dataReader.Read())
+		//		listStore.AppendValues(dataReader["id"].ToString(), dataReader["nombre"]);
+		//	dataReader.Close();
 
 
-		}
+		//}
 
 		protected void OnDeleteEvent(object sender, DeleteEventArgs a) {
 			App.Instance.Connection.Close();

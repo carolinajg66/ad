@@ -14,7 +14,7 @@ namespace CArticulo
 
 		private global::Gtk.Table table1;
 
-		private global::Gtk.ComboBox combobox1;
+		private global::Gtk.ComboBox ComboBoxC;
 
 		private global::Gtk.Entry entryNombre;
 
@@ -60,10 +60,10 @@ namespace CArticulo
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
-			this.combobox1 = global::Gtk.ComboBox.NewText();
-			this.combobox1.Name = "combobox1";
-			this.table1.Add(this.combobox1);
-			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1[this.combobox1]));
+			this.ComboBoxC = global::Gtk.ComboBox.NewText();
+			this.ComboBoxC.Name = "ComboBoxC";
+			this.table1.Add(this.ComboBoxC);
+			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1[this.ComboBoxC]));
 			w3.TopAttach = ((uint)(2));
 			w3.BottomAttach = ((uint)(3));
 			w3.LeftAttach = ((uint)(1));
