@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.mysql.jdbc.PreparedStatement;
+
 
 
 public class PruebaMySql {
@@ -18,11 +20,14 @@ public class PruebaMySql {
 					("jdbc:mysql://localhost/dbprueba","root","sistemas");
 
 			
+			//PreparedStatement preparedStatement=connection.prepareStatement("");
 			
+		
 			Statement statement= connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("Select * from categoria" );
+			ResultSet resultSet = statement.executeQuery("Select * from categoria order by id " );
 			
 			while (resultSet.next()) {
+				
 //				int numColums=resultSet.getMetaData().getColumnCount();
 //				for(int i=1;i<=numColums; i++) {
 //					
@@ -33,7 +38,11 @@ public class PruebaMySql {
 				String nombre=resultSet.getString("nombre");
 				
 				System.out.println("Id: "+id +"  -Nombre: "+nombre);
-				//System.out.println("Nombre "+nombre);
+				
+//				Resolución Luis
+//				System.out.printf("%5s % s\n", resultSet.getObject(1),resultSet.getObject(2));
+//				resultSet.close();
+			
 				
 			}
 			connection.close();
