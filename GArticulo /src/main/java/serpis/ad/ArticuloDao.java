@@ -113,7 +113,7 @@ public class ArticuloDao {
 //		String sql= "insert into articulo (nombre,precio,categoria) " +
 //                "values (\""+nombre +"\","+precio+","+categoria+")";
 		
-		statement.execute();
+		statement.executeUpdate();
 		
 		//TODO implementar
 	}
@@ -147,26 +147,39 @@ public class ArticuloDao {
 			
 		//statement.executeQuery(sql);
 		
-		statement.execute();
+		statement.executeUpdate();
 		
 		
 
 	}
 	
 	public static void consultar() throws SQLException {
-		Statement statement = conecta().createStatement();
+		
+		String sql= "select id, nombre, precio, categoria "
+	    		+ "from articulo where id= ?";
+		PreparedStatement statement = conecta().prepareStatement(sql);
 		long id=scanId("Introduce el id de los datos que quieres consular: ");
-	    ResultSet resultset = statement.executeQuery("select nombre, precio, categoria "
-	    		+ "from articulo where id="+String.valueOf(id));
-//	   
-//	    while (resultset.next() ) {
-//	        //String id = resultset.getString("id");
-//	        String nombre = resultset.getString("nombre");
-//	        String precio = resultset.getString("precio");
-//	        String categoria = resultset.getString("categoria");
-//	       // System.out.println(id + "\t" + nombre + "\t" + precio + "\t"+"\t" + categoria);
-//	        
+	   
+		statement.setLong(1, id);
+		
+		
+		
+		ResultSet rs = statement.executeQuery();
+		while (rs.next() ) {
+		//rs.next();
+		String idd = rs.getString("id");
+		String nombree=rs.getString("nombre");
+		String precioo=rs.getString("precio");
+		String categoriaa=rs.getString("categoria");
+		
+		 System.out.println("id= "+idd + "\n" +"nombre= "+ nombree + "\n" 
+		 +"precio= "+ precioo + "\n"+"categoria= " + categoriaa);
+		
+			
+		}
 	}
+		
+
 	
 	public static int categoria() throws SQLException {
 		
@@ -191,10 +204,42 @@ public class ArticuloDao {
 		
 	}
 	
+	public static void listar() throws SQLException {
+		
+		String sql= "select id, nombre, precio, categoria "
+	    		+ "from articulo ";
+		PreparedStatement statement = conecta().prepareStatement(sql);
+		
+
+		ResultSet rs = statement.executeQuery();
+		System.out.println(String.format("%10s%20s%10s%10s","Id","Nombre", "Precio","Categoria"));
+		while (rs.next() ) {
+		//rs.next();
+		String idd = rs.getString("id");
+		String nombree=rs.getString("nombre");
+		String precioo=rs.getString("precio");
+		String categoriaa=rs.getString("categoria");
+		
+		 System.out.println(String.format("%10s%20s%10s%10s",idd,nombree, precioo,categoriaa));
+		
+			
+		}
+		
+		
+		
+	}
+	
+	
 	public static void borrar() throws SQLException{
-		Statement statement = conecta().createStatement();
+		
+		String sql=("delete from articulo where id = ?");
+		PreparedStatement statement = conecta().prepareStatement(sql);
 		long id=scanId("Introduce el id que quieres borrar: ");
-		statement.execute("delete from articulo where id ="+id);
+		sql=("delete from articulo where id = ?");
+		
+		statement.setLong(1, id);
+		
+		statement.executeUpdate();
 }
 
 	

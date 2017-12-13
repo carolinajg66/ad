@@ -50,8 +50,10 @@ public class ArticuloMain {
 				ArticuloDao.consultar();
 				
 			else if (option == Option.Listar)
-				;
-			
+				ArticuloDao.listar();
+				
+		
+				
 		}
 		
 	}
