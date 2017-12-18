@@ -14,47 +14,103 @@ public class ArticuloMain {
 
 	
 	public enum Option {Salir, Nuevo, Editar, Eliminar, Consultar, Listar};
+	public enum State {Vacío, Medio, Lleno};
 	public static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) throws SQLException{
 		
-//	Expresiones Lambda		
-//		new Menu.add("Salir", null)
-//			.add("Nuevo", () -> nuevo())
-//			.add("Editar", ()-> editar())
-//			.run();
+		//Articulo articulo = new Articulo();
 
+			new Menu()
+			.add("Salir", null)
+			.add("Nuevo", () -> nuevo())
+			.add("Editar", () -> modificar())
+			.add("Eliminar", () -> eliminar())
+			.add("Consular", () -> consultar())
+			.add("Listar", () -> listar())
+			.run();
 		
+				
+
 		
 //		Runnable runnable = () ->  nuevo();
 //		runnable.run();
 	
 		
 	
-		while (true) {
-			
-			Option option = ArticuloDao.scanOption();
-			
-			if(option == Option.Salir)
-				break;
-			else if (option == Option.Nuevo)
-				ArticuloDao.nuevo();
-				
-			else if (option == Option.Editar)
-				ArticuloDao.modificar();
-				
-			else if (option == Option.Eliminar)
-				ArticuloDao.borrar();
-				
-			else if (option == Option.Consultar)
-				ArticuloDao.consultar();
-				
-			else if (option == Option.Listar)
-				ArticuloDao.listar();
-				
+//		while (true) {
+//			
+//			Option option = ArticuloDao.scanOption();
+//			
+//			if(option == Option.Salir)
+//				break;
+//			else if (option == Option.Nuevo)
+//				ArticuloDao.nuevo();
+//				
+//			else if (option == Option.Editar)
+//				ArticuloDao.modificar();
+//				
+//			else if (option == Option.Eliminar)
+//				ArticuloDao.borrar();
+//				
+//			else if (option == Option.Consultar)
+//				ArticuloDao.consultar();
+//				
+//			else if (option == Option.Listar)
+//				ArticuloDao.listar();
+//				
+//		
+//				
+//		}
 		
-				
+	}
+
+	private static void listar() {
+		try {
+			ArticuloDao.listar();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			// TODO: handle exception
 		}
+	}
+
+	private static void consultar() {
+		try {
+			ArticuloDao.consultar();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			// TODO: handle exception
+		}
+	}
+
+	private static void eliminar() {
+		try {
+			ArticuloDao.borrar();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			// TODO: handle exception
+		}
+		
+	}
+
+	private static void modificar()  {
+		try {
+			ArticuloDao.modificar();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			// TODO: handle exception
+		}
+		
+	}
+
+	private static void nuevo()  {
+		try {
+			ArticuloDao.nuevo();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			// TODO: handle exception
+		}
+		
 		
 	}
 		
