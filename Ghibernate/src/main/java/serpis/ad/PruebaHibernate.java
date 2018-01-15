@@ -63,7 +63,7 @@ public class PruebaHibernate {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		//Categoria categoria = entityManager.find(Categoria.class, id);
-		Categoria categoria = entityManager.getReference(Categoria.class, id)
+		Categoria categoria = entityManager.getReference(Categoria.class, id);
 		//categoria.setId(id);
 		entityManager.remove(categoria);
 		entityManager.getTransaction().commit();
