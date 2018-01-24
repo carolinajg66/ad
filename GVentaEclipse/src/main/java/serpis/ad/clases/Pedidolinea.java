@@ -107,6 +107,18 @@ public class Pedidolinea  implements java.io.Serializable {
     public void setImporte(BigDecimal importe) {
         this.importe = importe;
     }
+    
+    @Override
+    public String toString () {
+    	
+    	return String.format("%-5s%-15s%-15s%-15s%-15s%-15s", String.valueOf(this.getId()),
+				String.valueOf(this.getArticulo()),
+				String.valueOf(this.getPedido()),
+				String.valueOf(this.getPrecio()),
+				String.valueOf(this.getUnidades()),
+				String.valueOf(this.getImporte()));
+	
+    }
 
 
 

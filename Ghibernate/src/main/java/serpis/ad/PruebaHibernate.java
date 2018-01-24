@@ -22,7 +22,7 @@ public class PruebaHibernate {
 	
 //	showAll();
 	
-	modify(23L);
+//	modify(23L);
 	
 //	remove (2L);
 	
@@ -80,5 +80,7 @@ public class PruebaHibernate {
 		
 		entityManager.getTransaction().commit();
 	}
+	
+	
 
 }
