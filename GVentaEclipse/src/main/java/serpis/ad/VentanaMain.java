@@ -16,13 +16,14 @@ public class VentanaMain {
 
 	private static EntityManagerFactory entityManagerFactory;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MySQLIntegrityConstraintViolationException {
 
 		//Scanner scanner = new Scanner(System.in);
 
 		Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 
 		entityManagerFactory = Persistence.createEntityManagerFactory("serpis.ad.GVentaEclipse");
+		
 		int opc=-1;
 		do {
 			opc=menu();
@@ -33,6 +34,8 @@ public class VentanaMain {
 		// modify(23L);
 
 		// remove (2L);
+		
+		
 
 //		try {
 //			int numero;
@@ -59,7 +62,7 @@ public class VentanaMain {
 
 	}
 
-	private static int menu() {
+	private static int menu() throws MySQLIntegrityConstraintViolationException {
 		System.out.println("1.Ver Articulo "
 							+ "\n 2.Ver Categoria "
 							+ "\n 3.Ver Cliente "
@@ -88,6 +91,7 @@ public class VentanaMain {
 			return 1;
 			
 		case -1:
+			ventaDao.newPedido();
 			return -1;
 
 		default:

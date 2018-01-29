@@ -3,6 +3,7 @@ package serpis.ad.clases;
 
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +32,7 @@ public class Pedido  implements java.io.Serializable {
 
      private Long id;
      private Cliente cliente;
-     private Date fecha;
+     private Calendar fecha;
      private BigDecimal importe;
      private Set<Pedidolinea> pedidolineas = new HashSet<Pedidolinea>(0);
 
@@ -39,11 +40,11 @@ public class Pedido  implements java.io.Serializable {
     }
 
 	
-    public Pedido(Cliente cliente, Date fecha) {
+    public Pedido(Cliente cliente, Calendar fecha) {
         this.cliente = cliente;
         this.fecha = fecha;
     }
-    public Pedido(Cliente cliente, Date fecha, BigDecimal importe, Set<Pedidolinea> pedidolineas) {
+    public Pedido(Cliente cliente, Calendar fecha, BigDecimal importe, Set<Pedidolinea> pedidolineas) {
        this.cliente = cliente;
        this.fecha = fecha;
        this.importe = importe;
@@ -74,11 +75,11 @@ public class Pedido  implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="fecha", nullable=false, length=19)
-    public Date getFecha() {
+    public Calendar getFecha() {
         return this.fecha;
     }
     
-    public void setFecha(Date fecha) {
+    public void setFecha(Calendar fecha) {
         this.fecha = fecha;
     }
 

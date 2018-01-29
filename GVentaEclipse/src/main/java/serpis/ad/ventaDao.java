@@ -107,7 +107,10 @@ public class ventaDao {
 		entityManager.getTransaction().commit();
 
 	}
-	public static void newArticulo(int numero) throws MySQLIntegrityConstraintViolationException {
+	
+
+	
+	/*public static void newArticulo(int numero) throws MySQLIntegrityConstraintViolationException {
 		System.out.println("creando Articulo nueva");
 		Articulo Articulo = new Articulo();
 		Articulo.setCategoria(categoria);
@@ -121,7 +124,7 @@ public class ventaDao {
 		System.out.println("Creada " + Articulo);
 		entityManager.getTransaction().commit();
 
-	}
+	}*/
 	public static void newCliente(int numero) throws MySQLIntegrityConstraintViolationException {
 		System.out.println("creando Cliente nueva");
 		Cliente Cliente = new Cliente();
@@ -134,7 +137,7 @@ public class ventaDao {
 		entityManager.getTransaction().commit();
 
 	}
-	public static void newPedido(int numero) throws MySQLIntegrityConstraintViolationException {
+	/*public static void newPedido(int numero) throws MySQLIntegrityConstraintViolationException {
 		System.out.println("creando Pedido nueva");
 		Pedido Pedido = new Pedido();
 		Pedido.setNombre("Pedido " + String.valueOf(numero));
@@ -145,7 +148,29 @@ public class ventaDao {
 		System.out.println("Creada " + Pedido);
 		entityManager.getTransaction().commit();
 
+	}*/
+	
+	public static void newPedido() throws MySQLIntegrityConstraintViolationException {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		Pedido pedido = new Pedido();
+		Cliente cliente=entityManager.getReference(Cliente.class, 1L);
+		pedido.setCliente(cliente);
+		Pedidolinea pedidoLinea1= new Pedidolinea();
+		//Ojo las dos sentencias siguiente mantienen sincronizada la asociación 
+		pedido.getPedidolineas().add(pedidoLinea1);
+		pedidoLinea1.setPedido(pedido);
+		Articulo articulo = entityManager.getReference(Articulo.class, 1L);
+		pedidoLinea1.setArticulo(articulo);
+		
+		/*entityManager.persist(Pedido);
+		System.out.println("Creada " + Pedido);
+		entityManager.getTransaction().commit();*/
+
 	}
+	
+	/*
 	public static void newPedidolinea(int numero) throws MySQLIntegrityConstraintViolationException {
 		System.out.println("creando Pedidolinea nueva");
 		Pedidolinea Pedidolinea = new Pedidolinea();
@@ -157,7 +182,7 @@ public class ventaDao {
 		System.out.println("Creada " + Pedidolinea);
 		entityManager.getTransaction().commit();
 
-	}
+	}*/
 
 
 }
