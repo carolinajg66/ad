@@ -1,18 +1,16 @@
 package serpis.ad;
 
-//import java.util.Date;
-//import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//import javax.persistence.EntityManager;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-//import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
-//import serpis.ad.ventaDao;
+
 
 public class VentanaMain {
 
@@ -29,7 +27,7 @@ public class VentanaMain {
 		do {
 			opc=menu();
 		} while (opc!=-1);
-		
+		entityManagerFactory.close();
 		
 
 		// modify(23L);
@@ -86,7 +84,7 @@ public class VentanaMain {
 			ventaDao.showPedidolinea();
 			return 1;
 		case 6:
-
+			newCategoria();
 			return 1;
 			
 		case -1:
@@ -96,6 +94,21 @@ public class VentanaMain {
 			return -1;
 			
 		
+		}
+		
+	}
+	
+	private static void newCategoria() {
+		Scanner scanner = new Scanner(System.in);
+		try {
+			int numero;
+			System.out.println("Dime una numero para la categoria ");
+			numero = scanner.nextInt();
+			ventaDao.newCategoria(numero);
+		} catch (MySQLIntegrityConstraintViolationException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Esa categoria ya existe ");
+
 		}
 		
 	}
