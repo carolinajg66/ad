@@ -159,16 +159,20 @@ public class ventaDao {
 		pedido.setCliente(cliente);
 		Pedidolinea pedidoLinea1= new Pedidolinea();
 		//Ojo las dos sentencias siguiente mantienen sincronizada la asociación 
-		pedido.getPedidolineas().add(pedidoLinea1);
-		pedidoLinea1.setPedido(pedido);
+		//pedido.getPedidolineas().add(pedidoLinea1);
+		//pedidoLinea1.setPedido(pedido);
+		pedido.add(pedidoLinea1);
 		Articulo articulo = entityManager.getReference(Articulo.class, 1L);
 		pedidoLinea1.setArticulo(articulo);
 		
-		/*entityManager.persist(Pedido);
-		System.out.println("Creada " + Pedido);
-		entityManager.getTransaction().commit();*/
+		entityManager.persist(pedido);
+		entityManager.getTransaction().commit();
+		
+		for (Pedidolinea pedidolinea : pedido.getPedidolineas())
+			System.out.println(pedidolinea);
 
 	}
+	
 	
 	/*
 	public static void newPedidolinea(int numero) throws MySQLIntegrityConstraintViolationException {

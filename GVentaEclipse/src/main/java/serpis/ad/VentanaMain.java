@@ -102,6 +102,8 @@ public class VentanaMain {
 		
 	}
 	
+	
+	
 	private static void newCategoria() {
 		Scanner scanner = new Scanner(System.in);
 		try {

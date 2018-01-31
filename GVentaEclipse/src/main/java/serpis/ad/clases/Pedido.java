@@ -28,9 +28,13 @@ import javax.persistence.TemporalType;
     ,catalog="dbprueba"
 )
 public class Pedido  implements java.io.Serializable {
-
+	@Id 
+	@GeneratedValue(strategy=IDENTITY)
 
      private Long id;
+	
+	//@ManyToOne
+    //@JoinColumn(name="cliente")
      private Cliente cliente;
      private Calendar fecha;
      private BigDecimal importe;
@@ -39,6 +43,7 @@ public class Pedido  implements java.io.Serializable {
     public Pedido() {
     }
 
+    
 	
     public Pedido(Cliente cliente, Calendar fecha) {
         this.cliente = cliente;
@@ -51,8 +56,7 @@ public class Pedido  implements java.io.Serializable {
        this.pedidolineas = pedidolineas;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
-
+     
     
     @Column(name="id", unique=true, nullable=false)
     public Long getId() {
@@ -63,7 +67,7 @@ public class Pedido  implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="cliente", nullable=false)
     public Cliente getCliente() {
         return this.cliente;
@@ -100,6 +104,16 @@ public class Pedido  implements java.io.Serializable {
     
     public void setPedidolineas(Set<Pedidolinea> pedidolineas) {
         this.pedidolineas = pedidolineas;
+    }
+    
+    public void add(Pedidolinea pedidolinea) {
+    	pedidolineas.add(pedidolinea);
+    	pedidolinea.setPedido(this);
+    }
+    
+    public void remove(Pedidolinea pedidolinea) {
+    	pedidolineas.remove(pedidolinea);
+    	pedidolinea.setPedido(null);
     }
     
     @Override

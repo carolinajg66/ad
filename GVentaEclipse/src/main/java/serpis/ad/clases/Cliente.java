@@ -41,6 +41,7 @@ public class Cliente  implements java.io.Serializable {
        this.pedidos = pedidos;
     }
    
+    
      @Id @GeneratedValue(strategy=IDENTITY)
 
     
