@@ -28,13 +28,10 @@ import javax.persistence.TemporalType;
     ,catalog="dbprueba"
 )
 public class Pedido  implements java.io.Serializable {
-	@Id 
-	@GeneratedValue(strategy=IDENTITY)
 
      private Long id;
 	
-	//@ManyToOne
-    //@JoinColumn(name="cliente")
+
      private Cliente cliente;
      private Calendar fecha;
      private BigDecimal importe;
@@ -58,6 +55,8 @@ public class Pedido  implements java.io.Serializable {
    
      
     
+	@Id 
+	@GeneratedValue(strategy=IDENTITY)
     @Column(name="id", unique=true, nullable=false)
     public Long getId() {
         return this.id;
@@ -97,7 +96,7 @@ public class Pedido  implements java.io.Serializable {
         this.importe = importe;
     }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="pedido")
+    @OneToMany(mappedBy="pedido")
     public Set<Pedidolinea> getPedidolineas() {
         return this.pedidolineas;
     }
@@ -116,23 +115,12 @@ public class Pedido  implements java.io.Serializable {
     	pedidolinea.setPedido(null);
     }
     
+
     @Override
     public String toString(){
    
-//    	return "ID : "+String.valueOf(this.getId())
-//    		+"\nCliente : "+String.valueOf(this.getCliente())
-//    		+"\nFecha : "+String.valueOf(this.getFecha())
-//    		+"\nImporte : "+String.valueOf(this.getImporte())
-//    		
-//    		;
-    	return String.format("%-5s%-15s%-15s%-15s", String.valueOf(this.getId()),
-				String.valueOf(this.getCliente()),
-				String.valueOf(this.getFecha()),
-				String.valueOf(this.getImporte()));
-
-    	
-    	
-    }
+    	return String.format("[%s] %s %s %s", id, cliente.getNombre(), fecha.getTime(), importe);	
+}
 
 
 

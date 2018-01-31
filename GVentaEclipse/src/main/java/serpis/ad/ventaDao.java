@@ -17,10 +17,12 @@ import serpis.ad.clases.Pedidolinea;
 
 public class ventaDao {
 	
-	private static EntityManagerFactory entityManagerFactory =
-			Persistence.createEntityManagerFactory("serpis.ad.GVentaEclipse");
+	private static EntityManagerFactory entityManagerFactory ;
 	
-	private static Scanner scanner = new Scanner(System.in);
+	
+	public static void init(EntityManagerFactory entityManagerFactory) {
+				ventaDao.entityManagerFactory = entityManagerFactory;
+		}
 	
 	public static void showCategoria() {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -83,17 +85,6 @@ public class ventaDao {
 		
 	}
 
-	// private static void newCategoria() {
-	// System.out.println("creando categoria nueva");
-	// Categoria categoria= new Categoria();
-	// categoria.setNombre("nuevo " + new Date() );
-	// EntityManager entityManager = entityManagerFactory.createEntityManager();
-	// entityManager.getTransaction().begin();
-	// System.out.println("Creando "+ categoria);
-	// entityManager.persist(categoria);
-	// System.out.println("Creada "+ categoria );
-	// entityManager.getTransaction().commit();
-	// }
 
 	public static void newCategoria(int numero) throws MySQLIntegrityConstraintViolationException {
 		System.out.println("creando categoria nueva");
@@ -188,5 +179,8 @@ public class ventaDao {
 
 	}*/
 
+	public static void close() {
+		entityManagerFactory.close();
+	}
 
 }
