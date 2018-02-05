@@ -1,5 +1,7 @@
 package serpis.ad;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +18,7 @@ import serpis.ad.clases.Pedido;
 import serpis.ad.clases.Pedidolinea;
 
 public class ventaDao {
+	
 	
 	private static EntityManagerFactory entityManagerFactory ;
 	
@@ -156,14 +159,14 @@ public class ventaDao {
 		Articulo articulo = entityManager.getReference(Articulo.class, 1L);
 		pedidoLinea1.setArticulo(articulo);
 		
-		entityManager.persist(pedido);
-		entityManager.getTransaction().commit();
+		//entityManager.persist(pedido);
+		//entityManager.getTransaction().commit();
 		
 		for (Pedidolinea pedidolinea : pedido.getPedidolineas())
 			System.out.println(pedidolinea);
 
 	}
-	
+
 	
 	/*
 	public static void newPedidolinea(int numero) throws MySQLIntegrityConstraintViolationException {

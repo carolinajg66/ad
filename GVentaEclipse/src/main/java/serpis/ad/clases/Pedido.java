@@ -82,14 +82,17 @@ public class Pedido  implements java.io.Serializable {
         return this.fecha;
     }
     
-    public void setFecha(Calendar fecha) {
-        this.fecha = fecha;
+    public void setFecha(Calendar calendar) {
+        this.fecha = calendar;
     }
 
     
     @Column(name="importe", precision=10)
     public BigDecimal getImporte() {
-        return this.importe;
+    	importe=BigDecimal.ZERO;
+    	for(Pedidolinea pedidolinea : pedidolineas)
+    		importe.add(pedidolinea.getImporte());
+    	return importe;
     }
     
     public void setImporte(BigDecimal importe) {
@@ -97,13 +100,15 @@ public class Pedido  implements java.io.Serializable {
     }
 
     @OneToMany(mappedBy="pedido")
-    public Set<Pedidolinea> getPedidolineas() {
-        return this.pedidolineas;
+    public Pedidolinea[] getPedidolineas() {
+        return pedidolineas.toArray(new Pedidolinea[0]);
     }
     
     public void setPedidolineas(Set<Pedidolinea> pedidolineas) {
         this.pedidolineas = pedidolineas;
     }
+    
+  
     
     public void add(Pedidolinea pedidolinea) {
     	pedidolineas.add(pedidolinea);
@@ -116,6 +121,7 @@ public class Pedido  implements java.io.Serializable {
     }
     
 
+    
     @Override
     public String toString(){
    
