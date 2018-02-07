@@ -9,10 +9,13 @@ import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.transaction.Transaction;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
+import serpis.ad.clases.Categoria;
 import serpis.ad.clases.Cliente;
 import serpis.ad.clases.Pedido;
 
@@ -77,9 +80,11 @@ public class VentanaMain {
 							+ "\n 3.Ver Cliente "
 							+ "\n 4.Ver Pedido"
 							+ "\n 5.Ver Pedido Linea"
-							+ "\n 6.Nuevo Pedido"
+							+ "\n 6.Nueva Articulo"
 							+ "\n 7.Nueva Categoria"
-							+ "\n 8.Nueva Pedido");
+							+ "\n 8.Nuevo Cliente"
+							+ "\n 9.Nuevo Pedido"
+							+ "\n 10.Nuevo PedidoLinea ");
 		Scanner scanner = new Scanner(System.in);
 		int opcion = scanner.nextInt();
 		switch (opcion) {
@@ -99,31 +104,25 @@ public class VentanaMain {
 			ventaDao.showPedidolinea();
 			return 1;
 		case 6:
-			//ventaDao.newPedido();
+			//nuevo Articulo 
+			newCategoria();
 			return 1;
 		case 7:
 			newCategoria();
 			return 1;
 		case 8:
-			System.out.println("Lista de clientes");
-			ventaDao.showCliente();
-			System.out.println();
-			System.out.println("Vas a insertar un pedido");
-			BigDecimal importe;
-			String idcliente;
-			System.out.println("Dime el id del cliente ");
-			idcliente = scanner.next();
-			System.out.println("Dime el importe del pedido ");
-			importe = scanner.nextBigDecimal();
-			insert_pedido(idcliente);
+			newCliente();
 			
-			
-			
-//			System.out.println("--- Pedido nuevo ---");
-//			System.out.println("ID del cliente: ");
-//			String idcliente = scanner.next();
-//			insert_pedido( idcliente);
+			return 1;
+		case 9:
+			newPedido();
+			//Nuevo pedido
+			return 1;
+		case 10:
+			//Nuevo pedido lineaç
+			return 1;
 		
+			
 //		case -1:
 //			ventaDao.newPedido();
 //			return -1;
@@ -136,44 +135,7 @@ public class VentanaMain {
 		
 	}
 	
-	
-	protected static void insert_pedido ( String idcliente){
-		// Insertamos pedido
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		Pedido pedido = new Pedido();
-		Cliente cliente = entityManager.getReference(Cliente.class, Long.parseLong(idcliente));
-		pedido.setCliente(cliente);
-		Calendar calendar = Calendar.getInstance();
-		pedido.setFecha(calendar);
-//		BigDecimal importe = new BigDecimal(precio);
-//		pedido.setImporte(importe);
-		entityManager.persist(pedido);	
-		entityManager.getTransaction().commit();
-		
-	}
-	
-//	public static void nuevo_pedido(String idcliente, BigDecimal importe){
-//			
-//			EntityManager entityManager = entityManagerFactory.createEntityManager();
-//			entityManager.getTransaction().begin();
-//			Cliente cliente = entityManager.getReference(Cliente.class, Long.parseLong(idcliente));
-//			
-//			Pedido pedido = new Pedido();
-//			pedido.setCliente(cliente);
-//			
-//			java.util.Date dat = Calendar.getInstance().getTime();
-//			Date date = new Date(dat.getDate());
-//			pedido.setFecha(date);
-//			pedido.setImporte(importe);
-//			entityManager.persist(pedido);
-//			
-//			entityManager.getTransaction().commit();		
-//			//entityManager.close();
-//				
-//		}
 
-	
 	private static void newCategoria() {
 		Scanner scanner = new Scanner(System.in);
 		
@@ -189,6 +151,80 @@ public class VentanaMain {
 		}
 		
 	}
+	
+	private static void newPedido() {
+		Scanner scanner = new Scanner(System.in);
+		try {
+			System.out.println("Lista de clientes");
+			ventaDao.showCliente();
+			System.out.println("--- Pedido nuevo ---");
+			System.out.println("ID del cliente: ");
+			String idcliente = scanner.next();
+			ventaDao.newPedido(idcliente);
+			
+			
+		} catch (Exception e) {
+			System.out.println("El cliente que has introducido no existe");
+		}
+	}
+	
+//	public static void newCliente1(String nombre) throws MySQLIntegrityConstraintViolationException {
+//	
+//		EntityManager entityManager = entityManagerFactory.createEntityManager();
+//		EntityTransaction hola= entityManager.getTransaction();
+//		hola.begin();
+//		System.out.println("aaa");
+//		Cliente cliente = new Cliente();
+//		System.out.println("bbb");
+//		cliente.setNombre(nombre);
+//		System.out.println("ccc");
+//		entityManager.persist(cliente);
+//		System.out.println("Creado cliente " + cliente);
+////		entityManager.getTransaction().commit();
+//		hola.commit();
+//
+//	}
+//	
+//	public static void nuevo_cliente(){
+//		Scanner scanner = new Scanner(System.in);
+//		String nombre;
+//		System.out.println("Dime el nombre ");
+//		nombre=scanner.nextLine();
+//		
+//		EntityManager entityManager = entityManagerFactory.createEntityManager();
+//		entityManager.getTransaction().begin();
+//			
+//		Cliente cliente = new Cliente(nombre);
+//		//cliente.setNombre(nombre);
+//		entityManager.persist(cliente);
+//		
+//		entityManager.getTransaction().commit();
+//		
+//			
+//}
+	public static void newCategoria(int numero) throws MySQLIntegrityConstraintViolationException {
+		System.out.println("creando categoria nueva");
+		Categoria categoria = new Categoria();
+		categoria.setNombre("Categoria " + numero);
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(categoria);
+		System.out.println("Creada " + categoria);
+		entityManager.getTransaction().commit();
+
+	}
+	
+	public static void newCliente1(int numero) throws MySQLIntegrityConstraintViolationException {
+		Cliente cliente = new Cliente();
+		cliente.setNombre("Cliente " + numero);
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(cliente);
+		System.out.println("Creada " + cliente);
+		entityManager.getTransaction().commit();
+
+	}
+	
 	private static void newCliente() {
 		Scanner scanner = new Scanner(System.in);
 		
@@ -196,7 +232,7 @@ public class VentanaMain {
 			int numero;
 			System.out.println("Dime una numero para el cliente ");
 			numero = scanner.nextInt();
-			ventaDao.newCategoria(numero);
+			newCliente1(numero);
 		} catch (MySQLIntegrityConstraintViolationException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Esa categoria ya existe ");
@@ -204,6 +240,7 @@ public class VentanaMain {
 		}
 		
 	}
+	
 	
 	
 	

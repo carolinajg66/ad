@@ -2,6 +2,7 @@ package serpis.ad;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
@@ -95,14 +96,26 @@ public class ventaDao {
 		categoria.setNombre("Categoria " + numero);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
-		// System.out.println("Creando "+ categoria);
 		entityManager.persist(categoria);
 		System.out.println("Creada " + categoria);
 		entityManager.getTransaction().commit();
 
 	}
 	
+	protected static void newPedido ( String idcliente){
 
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager.getTransaction().begin();
+			Pedido pedido = new Pedido();
+			Cliente cliente = entityManager.getReference(Cliente.class, Long.parseLong(idcliente));
+			pedido.setCliente(cliente);
+			Calendar calendar = Calendar.getInstance();
+			pedido.setFecha(calendar);
+			pedido.getImporte();
+			entityManager.persist(pedido);	
+			entityManager.getTransaction().commit();
+			
+		}
 	
 	/*public static void newArticulo(int numero) throws MySQLIntegrityConstraintViolationException {
 		System.out.println("creando Articulo nueva");
@@ -121,28 +134,17 @@ public class ventaDao {
 	}*/
 	public static void newCliente(int numero) throws MySQLIntegrityConstraintViolationException {
 		System.out.println("creando Cliente nueva");
-		Cliente Cliente = new Cliente();
-		Cliente.setNombre("Cliente " + numero);
+		Cliente cliente = new Cliente();
+		cliente.setNombre("Cliente " + numero);
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		// System.out.println("Creando "+ Cliente);
-		entityManager.persist(Cliente);
-		System.out.println("Creada " + Cliente);
+		entityManager.persist(cliente);
+		System.out.println("Creada " + cliente);
 		entityManager.getTransaction().commit();
 
 	}
-	/*public static void newPedido(int numero) throws MySQLIntegrityConstraintViolationException {
-		System.out.println("creando Pedido nueva");
-		Pedido Pedido = new Pedido();
-		Pedido.setNombre("Pedido " + String.valueOf(numero));
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		// System.out.println("Creando "+ Pedido);
-		entityManager.persist(Pedido);
-		System.out.println("Creada " + Pedido);
-		entityManager.getTransaction().commit();
-
-	}*/
+	
 	
 	public static void newPedido() throws MySQLIntegrityConstraintViolationException {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();

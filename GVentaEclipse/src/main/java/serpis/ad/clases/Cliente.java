@@ -55,7 +55,7 @@ public class Cliente  implements java.io.Serializable {
     }
 
     
-    @Column(name="nombre", unique=true, nullable=false, length=50)
+    @Column(name="nombre", unique=true, nullable=false)
     public String getNombre() {
         return this.nombre;
     }
@@ -73,18 +73,27 @@ public class Cliente  implements java.io.Serializable {
         this.pedidos = pedidos;
     }
     
+//    @Override
+//    public String toString(){
+//    	
+////    	return String.format("%-5s%-15s", String.valueOf(this.getId()),
+////				this.getNombre());
+////   
+//    	return String.valueOf(this.getId())
+//    			this.getNombre();
+////    	return "ID : "+String.valueOf(this.getId())
+////    		+"\nNombre : "+this.getNombre();
+////    	
+//    }
+    
     @Override
     public String toString(){
-    	
     	return String.format("%-5s%-15s", String.valueOf(this.getId()),
 				this.getNombre());
-   
-//    	return "ID : "+String.valueOf(this.getId())
-//    		+"\nNombre : "+this.getNombre();
-//    	
+				
+    	//return "ID : "+String.valueOf(this.getId())+"\nNombre : "+this.getNombre();
+    	
     }
-
-
 
 
 }
